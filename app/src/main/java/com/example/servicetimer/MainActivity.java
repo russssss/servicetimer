@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements CustomResultRecei
     private TextView textTimer;
     private Button buttonTimer;
     private final String RECEIVER = "RECEIVER";
-    private String RECEIVER_NAME = "receiver";
+    private String RECEIVER_NAME = "RECEIVER_NAME";
 
     ///////////////////////////////////////////////////////////////////////////
     // Activity
@@ -47,9 +47,10 @@ public class MainActivity extends AppCompatActivity implements CustomResultRecei
     protected void onStart() {
         super.onStart();
 
-        Intent intent = new Intent(this, TimerService.class);
         customResultReceiver.setReceiver(this);
-        intent.putExtra(RECEIVER_NAME, customResultReceiver);
+
+        Intent intent = new Intent(this, TimerService.class);
+        intent.putExtra(Consts.RECEIVER_INTENT, customResultReceiver);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
@@ -70,9 +71,9 @@ public class MainActivity extends AppCompatActivity implements CustomResultRecei
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(RECEIVER, customResultReceiver);
-        super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle bundle) {
+        bundle.putParcelable(RECEIVER, customResultReceiver);
+        super.onSaveInstanceState(bundle);
     }
 
     ///////////////////////////////////////////////////////////////////////////

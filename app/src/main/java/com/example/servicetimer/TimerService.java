@@ -25,7 +25,6 @@ public class TimerService extends Service {
     private ResultReceiver receiver;
     private Timer timer;
     private boolean isPause = true;
-    private final String RECEIVER_VAL = "receiver";
     private final int FOREGROUND_ID = 2;
     private int seconds = 1;
     public static final String NOTIFICATION_CHANNEL_ID_SERVICE = "com.package.TimerService";
@@ -74,14 +73,14 @@ public class TimerService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        receiver = intent.getParcelableExtra(RECEIVER_VAL);
+        receiver = intent.getParcelableExtra(Consts.RECEIVER_INTENT);
         initCounter();
         return mBinder;
     }
 
     @Override
     public void onRebind(Intent intent) {
-        receiver = intent.getParcelableExtra(RECEIVER_VAL);
+        receiver = intent.getParcelableExtra(Consts.RECEIVER_INTENT);
         initCounter();
         super.onRebind(intent);
     }
