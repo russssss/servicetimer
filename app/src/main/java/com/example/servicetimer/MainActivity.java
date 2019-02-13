@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements CustomResultRecei
 
     private TimerService timerService;
     private boolean mServiceBound = false;
-    private boolean isStarted;
+    private boolean isPause;
     private CustomResultReceiver customResultReceiver;
     private TextView textTimer;
     private Button buttonTimer;
@@ -97,12 +97,12 @@ public class MainActivity extends AppCompatActivity implements CustomResultRecei
 
     private void initListener() {
         buttonTimer.setOnClickListener(v -> {
-            if (isStarted) {
+            if (!isPause) {
                 stopTimer();
-                isStarted = false;
+                isPause = true;
             } else {
                 startTimer();
-                isStarted = true;
+                isPause = false;
             }
         });
     }
@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements CustomResultRecei
             mServiceBound = true;
             setTime(timerService.getTime());
             buttonTimer.setText(timerService.isPause() ? R.string.start_timer : R.string.stop_timer);
+            isPause = timerService.isPause();
         }
     };
 
